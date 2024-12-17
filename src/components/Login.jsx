@@ -9,8 +9,9 @@ export default function Login() {
     const [password, setPassword] = useState()
     const [errorMessage, setErrorMessage] = useState()
 
+    const token = localStorage.getItem("token")
+
     useEffect(() => {
-        const token = localStorage.getItem("token")
         if (token) {
             navigate("/")
         }
@@ -43,15 +44,10 @@ export default function Login() {
                     </p>
                     {errorMessage && (
                         <>
-                            <p className="self-center text-red-600">
-                                {errorMessage}
-                            </p>
+                            <p className="self-center text-red-600">{errorMessage}</p>
                         </>
                     )}
-                    <form
-                        onSubmit={handleLoginSubmit}
-                        className="flex flex-col gap-2"
-                    >
+                    <form onSubmit={handleLoginSubmit} className="flex flex-col gap-2">
                         <div className="flex flex-col">
                             <label htmlFor="username">Username</label>
                             <input
@@ -76,10 +72,7 @@ export default function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
-                        <button
-                            type="submit"
-                            className="rounded-lg bg-green-500 p-2 text-white"
-                        >
+                        <button type="submit" className="rounded-lg bg-green-600 p-2 text-white">
                             <p>
                                 <strong>Log in</strong>
                             </p>
@@ -98,9 +91,7 @@ export default function Login() {
                         </div>
                     </div>
                     <Link to={"/"} className="ml-auto">
-                        <p className="underline hover:text-blue-600 hover:underline">
-                            Return to home
-                        </p>
+                        <p className="underline hover:text-blue-600 hover:underline">Return to home</p>
                     </Link>
                 </div>
             </div>

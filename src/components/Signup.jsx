@@ -30,13 +30,14 @@ export default function Signup() {
         console.log("handle submit ran")
         // console.log(data)
         axios
-            .post("http://localhost:3000/sign-up", body)
+            .post("http://localhost:3000/userData", body)
             .then(function (response) {
                 console.log(response.data.message)
                 navigate("/log-in")
             })
             .catch(function (error) {
                 console.log(error.response.data.errorMessage)
+                setErrorMessage(error.response.data.errorMessage)
             })
     }
 
@@ -49,13 +50,10 @@ export default function Signup() {
                     </p>
                     {errorMessage && (
                         <>
-                            <p className="text-red-600">{errorMessage}</p>
+                            <p className="self-center text-red-600">{errorMessage}</p>
                         </>
                     )}
-                    <form
-                        onSubmit={handleSignupSubmit}
-                        className="flex flex-col gap-2"
-                    >
+                    <form onSubmit={handleSignupSubmit} className="flex flex-col gap-2">
                         <div className="flex flex-col">
                             <label htmlFor="firstName">First name</label>
                             <input
@@ -63,9 +61,9 @@ export default function Signup() {
                                 placeholder="First name"
                                 name="firstName"
                                 id="firstName"
-                                className="rounded-lg border-2 border-gray-300 p-1"
                                 required
                                 onChange={(e) => setFirstName(e.target.value)}
+                                className="rounded-lg border-2 border-gray-300 p-1"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -104,10 +102,7 @@ export default function Signup() {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
-                        <button
-                            type="submit"
-                            className="rounded-lg bg-blue-500 p-2 text-white"
-                        >
+                        <button type="submit" className="rounded-lg bg-blue-500 p-2 text-white">
                             <p>
                                 <strong>Sign up</strong>
                             </p>
@@ -117,7 +112,7 @@ export default function Signup() {
                         <p>Already have an account?</p>
                         <div>
                             <Link to={"/log-in"}>
-                                <button className="rounded-lg bg-green-500 p-2 text-white">
+                                <button className="rounded-lg bg-green-600 p-2 text-white">
                                     <p>
                                         <strong>Log in</strong>
                                     </p>
@@ -126,9 +121,7 @@ export default function Signup() {
                         </div>
                     </div>
                     <Link to={"/"} className="ml-auto">
-                        <p className="underline hover:text-blue-600 hover:underline">
-                            Return to home
-                        </p>
+                        <p className="underline hover:text-blue-600 hover:underline">Return to home</p>
                     </Link>
                 </div>
             </div>

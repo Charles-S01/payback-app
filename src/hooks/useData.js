@@ -8,12 +8,13 @@ export default function useData(token) {
 
     console.log("useData hook ran")
 
-    useEffect(() => {
-        const headers = {
-            Authorization: "Bearer " + token,
-        }
+    const headers = {
+        Authorization: "Bearer " + token,
+    }
+    function fetch() {
+        console.log("useData fetch ran")
         axios
-            .get("http://localhost:3000/owes", { headers })
+            .get("http://localhost:3000/userData", { headers })
             .then(function (response) {
                 // handle success
                 console.log(response.data)
@@ -21,14 +22,17 @@ export default function useData(token) {
             })
             .catch(function (error) {
                 // handle error
-                console.log(error)
+                console.log(error.response.data.errorMessage)
                 setError(error.response.data.errorMessage)
             })
             .finally(function () {
                 setLoading(false)
             })
-        console.log("useData axios ran")
+    }
+
+    useEffect(() => {
+        fetch()
     }, [])
 
-    return { data, loading, error }
+    return { data, isLoading: loading, error, refetch: fetch }
 }
