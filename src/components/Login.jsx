@@ -55,7 +55,7 @@ export default function Login() {
                                 placeholder="Username"
                                 name="username"
                                 id="username"
-                                className="rounded-lg border-2 border-gray-300 p-1"
+                                className="rounded-lg bg-gray-100 p-1"
                                 required
                                 onChange={(e) => setUsername(e.target.value)}
                             />
@@ -67,7 +67,7 @@ export default function Login() {
                                 placeholder="Password"
                                 name="password"
                                 id="password"
-                                className="rounded-lg border-2 border-gray-300 p-1"
+                                className="rounded-lg bg-gray-100 p-1"
                                 required
                                 onChange={(e) => setPassword(e.target.value)}
                             />

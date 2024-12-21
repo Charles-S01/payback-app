@@ -1,5 +1,14 @@
 import App from "./App"
-import { Login, Signup } from "./components"
+import {
+    Login,
+    Signup,
+    ErrorPage,
+    Requests,
+    DebtDetail,
+    ProfileEdit,
+    RequestForm,
+    Notifications,
+} from "./components.js"
 import Home from "./components/Home"
 import Profile from "./components/Profile"
 
@@ -7,15 +16,42 @@ const routes = [
     {
         path: "/",
         element: <App />,
-        // errorElement: <ErrorPage />,
+        errorElement: <ErrorPage />,
         children: [
             {
                 index: true,
                 element: <Home />,
             },
+            { path: "/debt-detail/:isOwedToUser?/:debtId?", element: <DebtDetail /> },
             {
                 path: "/profile",
-                element: <Profile />,
+                children: [
+                    {
+                        index: true,
+                        element: <Profile />,
+                    },
+                    {
+                        path: "edit",
+                        element: <ProfileEdit />,
+                    },
+                ],
+            },
+            {
+                path: "/notifications",
+                element: <Notifications />,
+            },
+            {
+                path: "/request",
+                children: [
+                    {
+                        index: true,
+                        element: <Requests />,
+                    },
+                    {
+                        path: "form/:receiverId",
+                        element: <RequestForm />,
+                    },
+                ],
             },
         ],
     },

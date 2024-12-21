@@ -1,35 +1,34 @@
 export default function DebtCard({ debt, setDebtDataEdit, handleAddClick }) {
     const isOwedToUser = debt.isOwedToUser
 
-    function handleCardClick() {
-        handleAddClick()
-        setDebtDataEdit(debt)
-    }
+    // function handleCardClick() {
+    //     handleAddClick()
+    //     setDebtDataEdit(debt)
+    // }
     return (
         <>
             <div
-                className={`debt-card relative flex flex-col gap-4 rounded-xl border-2 border-slate-300 bg-white p-2 shadow-lg transition-all hover:cursor-pointer lg:hover:scale-105`}
-                onClick={handleCardClick}
+                className={`debt-card relative flex flex-col flex-nowrap gap-4 overflow-hidden rounded-xl bg-blue-200 bg-opacity-30 p-2 shadow-lg transition-all hover:cursor-pointer lg:hover:scale-105`}
             >
                 <div className="top-half flex justify-between">
-                    <div className="flex flex-col">
-                        <p>
-                            <strong className="text-xl">{debt.otherPartyName}</strong>{" "}
-                            {isOwedToUser ? "owes me" : "is owed"}
+                    <div className="left-side flex flex-col">
+                        <p className="text-nowrap">
+                            <strong className="text-xl">{debt.otherPartyName}</strong>
                         </p>
-                        <p className={`text-3xl ${isOwedToUser ? "text-green-600" : "text-red-500"}`}>
-                            <strong>{`$${debt.oweAmount}`}</strong>
+                        <p>{isOwedToUser ? "owes" : "is owed"}</p>
+                        <p
+                            className={`text-3xl ${isOwedToUser ? "text-green-700" : "text-red-500"}`}
+                        >
+                            <strong>{`$${(Math.round(debt.oweAmount * 100) / 100).toFixed(2)}`}</strong>
                         </p>
                     </div>
-                    <div className="left-side">
-                        <p>Date created:</p>
-                        {/* <p>{debt.createdAt}</p> */}
+
+                    <div className="">
+                        {/* <p>Date created:</p> */}
+                        <p>{new Date(debt.createdAt).toLocaleDateString()}</p>
                     </div>
                 </div>
-                <div className="description">
-                    <p>Description:</p>
-                    <p>{debt.description}</p>
-                </div>
+
                 <button className="absolute bottom-1 right-1 rounded-lg p-1 lg:hover:bg-gray-600 lg:hover:bg-opacity-10">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
