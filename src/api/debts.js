@@ -1,20 +1,20 @@
 import { useQuery, QueryClientProvider, QueryClient } from "react-query"
 import axios from "axios"
+import axiosInstance from "../axiosInstance"
 
-const token = localStorage.getItem("token")
-const headers = {
-    Authorization: "Bearer " + token,
-}
+// const token = localStorage.getItem("token")
+// const headers = {
+//     Authorization: "Bearer " + token,
+// }
 
 export async function getDebts({ userId, isOwedToUser, isPaid, debtId }) {
     try {
-        const response = await axios.get(`http://localhost:3000/debts/search/${userId}`, {
+        const response = await axiosInstance.get(`/debts/search/${userId}`, {
             params: { isOwedToUser, isPaid },
         })
-        // console.log("Debts: " + JSON.stringify(response.data, null, 2))
         return response.data
     } catch (err) {
-        console.error(err)
+        throw err
     }
 }
 
@@ -22,13 +22,10 @@ export async function getDebt({ debtId }) {
     if (debtId) {
         console.log("getDebt ran")
         try {
-            const response = await axios.get(`http://localhost:3000/debts/single/${debtId}`, {
-                headers,
-            })
-            console.log(response)
+            const response = await axiosInstance.get(`/debts/single/${debtId}`)
             return response.data
         } catch (err) {
-            console.log(err)
+            throw err
         }
     }
 }
@@ -36,13 +33,10 @@ export async function getDebt({ debtId }) {
 export async function getTotalOwe(userId) {
     try {
         console.log("getTotalOwe ran")
-        const response = await axios.get(`http://localhost:3000/debts/totalDebt`, {
-            headers,
-        })
-        // console.log("Total debt: " + JSON.stringify(response.data, null, 2))
+        const response = await axiosInstance.get(`/debts/totalDebt`)
         return response.data
     } catch (err) {
-        console.error(err)
+        throw err
     }
 }
 
@@ -54,12 +48,10 @@ export async function createDebt({ otherPartyName, oweAmount, description, isOwe
             description,
             isOwedToUser,
         }
-        const response = await axios.post(`http://localhost:3000/debts`, body, {
-            headers,
-        })
+        const response = await axiosInstance.post(`/debts`, body)
         return response.data
     } catch (err) {
-        console.error(err)
+        throw err
     }
 }
 
@@ -72,11 +64,10 @@ export async function updateDebt({ debtId, otherPartyName, oweAmount, descriptio
             description,
             isPaid,
         }
-        const response = await axios.put(`http://localhost:3000/debts/${debtId}`, body, { headers })
-        console.log(response)
+        const response = await axiosInstance.put(`/debts/${debtId}`, body)
         return response.data
     } catch (err) {
-        console.error(err)
+        throw err
     }
 }
 
@@ -85,11 +76,11 @@ export async function deleteDebts({ isPaid, debtId }) {
         const params = {
             isPaid,
         }
-        const response = await axios.delete(`http://localhost:3000/debts/${debtId || ""}`, {
+        const response = await axiosInstance.delete(`/debts/${debtId || ""}`, {
             params,
         })
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }

@@ -25,11 +25,16 @@ function Appp() {
     const location = useLocation()
     const navigate = useNavigate()
     const token = localStorage.getItem("token")
+
     const isLoggedIn = token ? true : false
-    const headers = {
-        Authorization: "Bearer " + token,
+    if (!isLoggedIn) {
+        navigate("/log-in")
     }
-    const { data, isLoading, error, refetch } = useUser()
+    // const headers = {
+    //     Authorization: "Bearer " + token,
+    // }
+
+    const { data, isLoading, error } = useUser()
 
     const [sidebarShow, setSidebarShow] = useState(() => {
         const sideBarSetting = localStorage.getItem("sidebarShow")
@@ -261,7 +266,7 @@ function Appp() {
                                 <Loading />
                             </>
                         )}
-                        {data && (
+                        {data && !error && (
                             <>
                                 <AppContext.Provider
                                     value={

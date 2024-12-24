@@ -1,39 +1,34 @@
 import { useQuery, QueryClientProvider, QueryClient } from "react-query"
 import axios from "axios"
+import axiosInstance from "../axiosInstance"
 
-const token = localStorage.getItem("token")
-const headers = {
-    Authorization: "Bearer " + token,
-}
+// const token = localStorage.getItem("token")
+// const headers = {
+//     Authorization: "Bearer " + token,
+// }
 
 export async function createRequest({ receiverId, amount, message }) {
     try {
         console.log("createRequest ran")
-        // console.log(creatorId)
 
         const body = {
             receiverId,
             amount,
             message,
         }
-        const response = await axios.post(`http://localhost:3000/money-request`, body, {
-            headers,
-        })
+        const response = await axiosInstance.post(`/money-request`, body)
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }
 
 export async function getReceivedRequests({ userId }) {
     try {
         console.log("getReceivedRequests ran")
-        const response = await axios.get(`http://localhost:3000/money-request/received`, {
-            headers,
-        })
-        console.log(response)
+        const response = await axiosInstance.get(`/money-request/received`)
         return response.data
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }

@@ -8,7 +8,7 @@ export default function NotificationCard({
 }) {
     return (
         <>
-            <div className="card flex justify-between overflow-hidden text-nowrap rounded-lg bg-blue-200 bg-opacity-50 p-2">
+            <div className="card flex justify-between overflow-hidden text-nowrap rounded-xl bg-blue-200 bg-opacity-50 p-2">
                 <div className="left-side flex flex-col">
                     <div className="creator-name">
                         <p>

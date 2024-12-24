@@ -25,8 +25,6 @@ export default function DebtDetail() {
 
     const isOweToUser = isEditMode ? debtData?.debt.isOwedToUser : isOwedToUser === "true"
 
-    console.log("debtData: " + JSON.stringify(debtData, null, 2))
-
     // const { activeModal, handleCloseModal, isOweToUserModal, debtData } = useContext(ActiveModalContext)
 
     const [otherPartyName, setOtherPartyName] = useState("")
@@ -45,10 +43,6 @@ export default function DebtDetail() {
         mutationFn: createDebt,
         onSuccess: () => {
             console.log("addDebtMutation success")
-            // queryClient.invalidateQueries(["debtsToUser", "debtsToOthers", "totalDebt"])
-            queryClient.invalidateQueries(["debtsToUser"])
-            queryClient.invalidateQueries(["debtsToOthers"])
-            queryClient.invalidateQueries(["totalDebt"])
         },
     })
 
@@ -56,10 +50,6 @@ export default function DebtDetail() {
         mutationFn: updateDebt,
         onSuccess: () => {
             console.log("updateDebt success")
-            // queryClient.invalidateQueries(["debtsToUser", "debtsToOthers", "totalDebt"])
-            queryClient.invalidateQueries(["debtsToUser"])
-            queryClient.invalidateQueries(["debtsToOthers"])
-            queryClient.invalidateQueries(["totalDebt"])
         },
     })
 
@@ -80,8 +70,7 @@ export default function DebtDetail() {
 
     async function handleResolve(e) {
         await updateDebtMutation({ debtId, otherPartyName, oweAmount, description, isPaid: true })
-        navigate("/")
-        // handleCloseModal()
+        navigate(history.back())
     }
 
     return (

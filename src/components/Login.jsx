@@ -1,8 +1,22 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { QueryClient, QueryClientProvider, useMutation } from "react-query"
 import { Link, useNavigate } from "react-router-dom"
+import { loginUser } from "../api/auth"
 
-export default function Login() {
+const queryClient = new QueryClient()
+
+export default function Login(params) {
+    return (
+        <>
+            <QueryClientProvider client={queryClient}>
+                <Loginn />
+            </QueryClientProvider>
+        </>
+    )
+}
+
+function Loginn() {
     const navigate = useNavigate()
 
     const [username, setUsername] = useState()
@@ -11,28 +25,28 @@ export default function Login() {
 
     const token = localStorage.getItem("token")
 
-    useEffect(() => {
-        if (token) {
-            navigate("/")
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (token) {
+    //         navigate("/")
+    //     }
+    // }, [])
 
-    function handleLoginSubmit(e) {
+    const { mutateAsync: loginUserMutation } = useMutation({
+        mutationFn: () => loginUser({ username, password }),
+        onError: (error) => {
+            console.log("onError")
+            setErrorMessage(error.response.data.message)
+        },
+        onSuccess: (data) => {
+            console.log("onSuccess")
+            localStorage.setItem("token", data.token)
+            navigate("/")
+        },
+    })
+
+    async function handleLoginSubmit(e) {
         e.preventDefault()
-        const body = {
-            username,
-            password,
-        }
-        axios
-            .post("http://localhost:3000/log-in", body)
-            .then(function (response) {
-                console.log(response.data.message)
-                localStorage.setItem("token", response.data.token)
-                navigate("/")
-            })
-            .catch(function (error) {
-                setErrorMessage(error.response.data.errorMessage)
-            })
+        await loginUserMutation()
     }
 
     return (
@@ -55,7 +69,7 @@ export default function Login() {
                                 placeholder="Username"
                                 name="username"
                                 id="username"
-                                className="rounded-lg bg-gray-100 p-1"
+                                className="rounded-lg bg-gray-100 p-2"
                                 required
                                 onChange={(e) => setUsername(e.target.value)}
                             />
@@ -67,7 +81,7 @@ export default function Login() {
                                 placeholder="Password"
                                 name="password"
                                 id="password"
-                                className="rounded-lg bg-gray-100 p-1"
+                                className="rounded-lg bg-gray-100 p-2"
                                 required
                                 onChange={(e) => setPassword(e.target.value)}
                             />
@@ -91,7 +105,9 @@ export default function Login() {
                         </div>
                     </div>
                     <Link to={"/"} className="ml-auto">
-                        <p className="underline hover:text-blue-600 hover:underline">Return to home</p>
+                        <p className="underline hover:text-blue-600 hover:underline">
+                            Return to home
+                        </p>
                     </Link>
                 </div>
             </div>

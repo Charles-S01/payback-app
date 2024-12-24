@@ -1,36 +1,70 @@
 import axios from "axios"
-
-const token = localStorage.getItem("token")
-const headers = {
-    Authorization: "Bearer " + token,
-}
+import axiosInstance from "../axiosInstance"
+import axiosAuth from "../axiosAuth"
 
 // get logged in user
 export async function getUser({ userId }) {
-    console.log("getUser ran")
-    const response = await axios.get(`http://localhost:3000/users/${userId || ""}`, { headers })
-
-    return response.data
+    try {
+        console.log("getUser ran")
+        const response = await axiosInstance.get(`/users/${userId || ""}`)
+        return response.data
+    } catch (error) {
+        throw error
+    }
 }
 
+// export async function createUser({ firstName, lastName, username, password }) {
+//     try {
+//         const body = {
+//             firstName,
+//             lastName,
+//             username,
+//             password,
+//         }
+//         const response = await axiosAuth.post("/sign-up", body)
+//         return response.data
+//     } catch (error) {
+//         return error
+//     }
+// }
+
+// export async function loginUser({ username, password }) {
+//     try {
+//         const body = {
+//             username,
+//             password,
+//         }
+//         const response = await axiosAuth.post("/log-in", body)
+//         return response.data
+//     } catch (error) {
+//         return error
+//     }
+// }
+
 export async function updateUser({ firstName, lastName }) {
-    const body = {
-        firstName,
-        lastName,
+    try {
+        const body = {
+            firstName,
+            lastName,
+        }
+        const response = await axiosInstance.put(`/users`, body)
+        return response.data
+    } catch (error) {
+        throw error
     }
-    const response = await axios.put(`http://localhost:3000/users`, body, { headers })
-    return response.data
 }
 
 export async function getUsers({ userId, firstName, lastName }) {
-    const params = {
-        firstName,
-        lastName,
+    try {
+        const params = {
+            firstName,
+            lastName,
+        }
+        const response = await axiosInstance.get(`/users/search/${userId || ""}`, {
+            params,
+        })
+        return response.data
+    } catch (error) {
+        throw error
     }
-    const response = await axios.get(`http://localhost:3000/users/search/${userId || ""}`, {
-        params,
-        headers,
-    })
-    console.log("getUsers response: " + response)
-    return response.data
 }

@@ -1,8 +1,22 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
+import { QueryClient, QueryClientProvider, useMutation, useQueries, useQuery } from "react-query"
+import { createUser } from "../api/auth"
 
-export default function Signup() {
+const queryClient = new QueryClient()
+
+export default function Login(params) {
+    return (
+        <>
+            <QueryClientProvider client={queryClient}>
+                <Signupp />
+            </QueryClientProvider>
+        </>
+    )
+}
+
+function Signupp() {
     const navigate = useNavigate()
 
     const [firstName, setFirstName] = useState()
@@ -10,35 +24,27 @@ export default function Signup() {
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
     const [errorMessage, setErrorMessage] = useState(null)
+
     // console.log("Signup render")
 
-    useEffect(() => {
-        const token = localStorage.getItem("token")
-        if (token) {
-            navigate("/")
-        }
-    }, [])
+    // useEffect(() => {
+    //     const token = localStorage.getItem("token")
+    //     if (token) {
+    //         navigate("/")
+    //     }
+    // }, [])
 
-    function handleSignupSubmit(e) {
+    const { mutateAsync: createUserMutation } = useMutation({
+        mutationFn: () => createUser({ firstName, lastName, username, password }),
+        onError: (error) => setErrorMessage(error.response.data.message),
+        onSuccess: () => navigate("/log-in"),
+    })
+
+    async function handleSignupSubmit(e) {
         e.preventDefault()
-        const body = {
-            firstName,
-            lastName,
-            username,
-            password,
-        }
         console.log("handle submit ran")
-        // console.log(data)
-        axios
-            .post("http://localhost:3000/users", body)
-            .then(function (response) {
-                console.log(response.data.message)
-                navigate("/log-in")
-            })
-            .catch(function (error) {
-                console.log(error.response.data.errorMessage)
-                setErrorMessage(error.response.data.errorMessage)
-            })
+
+        await createUserMutation()
     }
 
     return (
@@ -64,7 +70,7 @@ export default function Signup() {
                                 required
                                 max={10}
                                 onChange={(e) => setFirstName(e.target.value)}
-                                className="rounded-lg bg-gray-100 p-1"
+                                className="rounded-lg bg-gray-100 p-2"
                             />
                         </div>
                         <div className="flex flex-col">
@@ -74,7 +80,7 @@ export default function Signup() {
                                 placeholder="Last name"
                                 name="lastName"
                                 id="lastName"
-                                className="rounded-lg bg-gray-100 p-1"
+                                className="rounded-lg bg-gray-100 p-2"
                                 required
                                 max={10}
                                 onChange={(e) => setLastName(e.target.value)}
@@ -87,7 +93,7 @@ export default function Signup() {
                                 placeholder="Username"
                                 name="username"
                                 id="username"
-                                className="rounded-lg bg-gray-100 p-1"
+                                className="rounded-lg bg-gray-100 p-2"
                                 required
                                 max={10}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -100,7 +106,7 @@ export default function Signup() {
                                 placeholder="Password"
                                 name="password"
                                 id="password"
-                                className="rounded-lg bg-gray-100 p-1"
+                                className="rounded-lg bg-gray-100 p-2"
                                 required
                                 onChange={(e) => setPassword(e.target.value)}
                             />
