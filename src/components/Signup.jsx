@@ -49,8 +49,8 @@ function Signupp() {
 
     return (
         <>
-            <div className="whole-page m-0 flex h-full w-full min-w-64 items-center justify-center p-0">
-                <div className="signup-box flex min-h-52 basis-96 flex-col gap-2 rounded-xl border-2 border-green-500 p-4 shadow-xl">
+            <div className="whole-page m-0 flex h-full w-full min-w-64 items-center justify-center bg-green-700 p-0">
+                <div className="signup-box flex min-h-52 basis-96 flex-col gap-2 rounded-xl border-2 border-green-500 bg-white p-4 shadow-xl">
                     <p className="self-center text-3xl">
                         <strong>Sign up</strong>
                     </p>

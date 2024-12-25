@@ -22,8 +22,6 @@ export default function Requests({}) {
 
     function handleSubmit(e) {
         e.preventDefault()
-
-        // queryClient.invalidateQueries(["searchUsers"])
     }
 
     return (

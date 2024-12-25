@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { BackButton, Modal } from "../components"
+import { BackButton, Loading, Modal } from "../components"
 import { ActiveModalContext } from "../App"
 import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
@@ -15,7 +15,7 @@ export default function DebtDetail() {
     const queryClient = useQueryClient()
     const { data } = useUser()
 
-    const { data: debtData } = useQuery({
+    const { data: debtData, isLoading } = useQuery({
         queryKey: ["debtData"],
         queryFn: () => getDebt({ debtId }),
         cacheTime: 0,
@@ -73,96 +73,106 @@ export default function DebtDetail() {
         navigate(history.back())
     }
 
+    if (isLoading) {
+        return (
+            <>
+                <Loading />
+            </>
+        )
+    }
+
     return (
         <>
             <>
-                <div className="MAIN-content-wrapper relative flex min-w-[290px] max-w-[52rem] flex-1 flex-col items-center justify-center gap-4 px-4">
-                    <BackButton />
+                {!isLoading && (
+                    <div className="MAIN-content-wrapper relative flex min-w-[290px] max-w-[52rem] flex-1 flex-col items-center justify-center gap-4 px-4">
+                        <BackButton />
 
-                    <div className="box flex flex-col gap-4 rounded-xl bg-white p-4">
-                        <div className="modal-title">
-                            <p className="text-2xl">
-                                <strong>{isEditMode ? "Edit" : "Add"}</strong>
-                            </p>
-                        </div>
-
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                            <label className="flex flex-col">
-                                {isOweToUser ? "Who owes you?" : "Who do you owe?"}
-                                <input
-                                    type="text"
-                                    value={otherPartyName}
-                                    name="otherPartyName"
-                                    placeholder="Enter their name"
-                                    required
-                                    maxLength={21}
-                                    onChange={(e) => setOtherPartyName(e.target.value)}
-                                    className="rounded-lg bg-gray-100 p-2"
-                                />
-                            </label>
-                            <label className="">
-                                <p>{`How much is owed? ($)`}</p>
-                                <input
-                                    value={parseFloat(oweAmount)}
-                                    name="oweAmount"
-                                    type="number"
-                                    placeholder="$"
-                                    required
-                                    // min={0}
-                                    max={999999}
-                                    onChange={(e) => setOweAmount(e.target.value)}
-                                    className="w-24 rounded-lg bg-gray-100 p-2"
-                                />
-                            </label>
-                            <label className="flex flex-col">
-                                <p>Description</p>
-                                <textarea
-                                    value={description}
-                                    type="text"
-                                    name="debtDescription"
-                                    placeholder="Add details (optional)"
-                                    maxLength={100}
-                                    className="h-20 resize-none rounded-lg bg-gray-100 p-2"
-                                    onChange={(e) => setDescription(e.target.value)}
-                                />
-                            </label>
-                            <div className="buttons flex flex-col gap-2">
-                                <button
-                                    type="submit"
-                                    className="rounded-lg bg-blue-500 p-2 text-white"
-                                >
-                                    Done
-                                </button>
-                                {isEditMode && (
-                                    <>
-                                        <button
-                                            type="button"
-                                            onClick={() => handleResolve()}
-                                            id="resolved-btn"
-                                            className="resolved-btn flex justify-center gap-2 rounded-lg bg-green-600 p-2 text-white"
-                                        >
-                                            <p>Resolve</p>
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                strokeWidth={1.5}
-                                                stroke="currentColor"
-                                                className="size-6"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    d="m4.5 12.75 6 6 9-13.5"
-                                                />
-                                            </svg>
-                                        </button>
-                                    </>
-                                )}
+                        <div className="box flex flex-col gap-4 rounded-xl bg-white p-4">
+                            <div className="modal-title">
+                                <p className="text-2xl">
+                                    <strong>{isEditMode ? "Edit" : "Add"}</strong>
+                                </p>
                             </div>
-                        </form>
+
+                            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                                <label className="flex flex-col">
+                                    {isOweToUser ? "Who owes you?" : "Who do you owe?"}
+                                    <input
+                                        type="text"
+                                        value={otherPartyName}
+                                        name="otherPartyName"
+                                        placeholder="Enter their name"
+                                        required
+                                        maxLength={21}
+                                        onChange={(e) => setOtherPartyName(e.target.value)}
+                                        className="rounded-lg bg-gray-100 p-2"
+                                    />
+                                </label>
+                                <label className="">
+                                    <p>{`How much is owed? ($)`}</p>
+                                    <input
+                                        value={parseFloat(oweAmount)}
+                                        name="oweAmount"
+                                        type="number"
+                                        placeholder="$"
+                                        required
+                                        // min={0}
+                                        max={999999}
+                                        onChange={(e) => setOweAmount(e.target.value)}
+                                        className="w-24 rounded-lg bg-gray-100 p-2"
+                                    />
+                                </label>
+                                <label className="flex flex-col">
+                                    <p>Description</p>
+                                    <textarea
+                                        value={description}
+                                        type="text"
+                                        name="debtDescription"
+                                        placeholder="Add details (optional)"
+                                        maxLength={100}
+                                        className="h-20 resize-none rounded-lg bg-gray-100 p-2"
+                                        onChange={(e) => setDescription(e.target.value)}
+                                    />
+                                </label>
+                                <div className="buttons flex flex-col gap-2">
+                                    <button
+                                        type="submit"
+                                        className="rounded-lg bg-blue-500 p-2 text-white"
+                                    >
+                                        Done
+                                    </button>
+                                    {isEditMode && (
+                                        <>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleResolve()}
+                                                id="resolved-btn"
+                                                className="resolved-btn flex justify-center gap-2 rounded-lg bg-green-600 p-2 text-white"
+                                            >
+                                                <p>Resolve</p>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    strokeWidth={1.5}
+                                                    stroke="currentColor"
+                                                    className="size-6"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="m4.5 12.75 6 6 9-13.5"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </>
+                                    )}
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                )}
             </>
         </>
     )

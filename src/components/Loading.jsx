@@ -2,7 +2,7 @@ export default function Loading(params) {
     return (
         <>
             <div className="loading-box flex flex-col items-center gap-2">
-                <p className="text-2xl">Loading...</p>
+                {/* <p className="text-2xl">Loading...</p> */}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

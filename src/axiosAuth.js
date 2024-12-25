@@ -1,11 +1,11 @@
 import axios from "axios"
 
 const axiosAuth = axios.create({
-    baseURL: "http://localhost:4000",
-    timeout: 1000,
+    baseURL: "https://payback-api-production.up.railway.app/auth",
+    timeout: 30000,
     // withCredentials: true,
     headers: { "Content-Type": "application/json" },
-}) // Create the axios instance
+})
 
 axiosAuth.interceptors.response.use(
     (response) => {

@@ -93,7 +93,7 @@ export default function Profile() {
                 <div className="resolved-debts gap-2">
                     <div className="flex border-b-4 border-b-gray-300 p-2">
                         <p className="mr-auto text-2xl">
-                            <strong>Resolved debts</strong>
+                            <strong>Resolved</strong>
                         </p>
                         <button
                             onClick={handleClear}

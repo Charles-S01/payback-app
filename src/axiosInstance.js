@@ -4,11 +4,11 @@ import { refreshToken } from "./api/auth"
 import useRefreshToken from "./hooks/useRefreshToken"
 
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",
-    timeout: 1000,
+    baseURL: "https://payback-api-production.up.railway.app",
+    timeout: 30000,
     // withCredentials: true,
     headers: { "Content-Type": "application/json" },
-}) // Create the axios instance
+})
 
 axiosInstance.interceptors.request.use(
     (config) => {
