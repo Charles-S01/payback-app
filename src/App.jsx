@@ -75,7 +75,7 @@ function Appp() {
                     className={`sidebar-view ${sidebarShow ? "block lg:static lg:z-0 lg:h-full lg:w-auto" : "hidden"} fixed z-10 flex h-full w-screen backdrop-blur-md backdrop-brightness-50`}
                 >
                     <div
-                        className={`sidebar-itself w-60 bg-green-900 text-white shadow-2xl ${sidebarShow && "lg:z-0 lg:h-full"} z-10 flex h-full flex-col gap-4 bg-white p-4 lg:static lg:z-0`}
+                        className={`sidebar-itself w-60 bg-green-950 text-white shadow-2xl ${sidebarShow && "lg:z-0 lg:h-full"} z-10 flex h-full flex-col gap-4 bg-white p-4 lg:static lg:z-0`}
                     >
                         <button
                             onClick={() => setSidebarShow(!sidebarShow)}
