@@ -254,7 +254,9 @@ function Appp() {
                         {error && (
                             <>
                                 <div className="mt-4">
-                                    <p className="text-2xl">{error.response.data.message}</p>
+                                    <p className="text-2xl">
+                                        {error.response.data.message || "Something went wrong"}
+                                    </p>
                                 </div>
                             </>
                         )}
