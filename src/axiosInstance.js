@@ -41,6 +41,7 @@ axiosInstance.interceptors.response.use(
             console.log("newToken:", data.token)
             localStorage.setItem("token", data.token)
         }
+        error.response.data.message = "Unauthorized. Try logging back in or refresh the page"
         return Promise.reject(error)
     },
 )

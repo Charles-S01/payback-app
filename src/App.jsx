@@ -254,10 +254,7 @@ function Appp() {
                         {error && (
                             <>
                                 <div className="mt-4">
-                                    <p className="text-2xl">
-                                        Error occured. Try refreshing the page or log in if you
-                                        haven't.
-                                    </p>
+                                    <p className="text-2xl">{error.response.data.message}</p>
                                 </div>
                             </>
                         )}
