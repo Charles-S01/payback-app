@@ -4,6 +4,3 @@ A web appliation where users can keep track of money owed to them and debts they
 Built using:
 * JavaScript, React.js, Node.js, Express, PostgreSQL, Prisma, Tailwind CSS, HTML
 
-## Live Demo
-[View the live app here](payback-app-eight.vercel.app)
-
