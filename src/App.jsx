@@ -18,7 +18,6 @@ export default function App() {
     )
 }
 
-export const ActiveModalContext = createContext({})
 export const AppContext = createContext({})
 
 function Appp() {
@@ -29,9 +28,6 @@ function Appp() {
     const isLoggedIn = token ? true : false
     // if (!isLoggedIn) {
     //     navigate("/log-in")
-    // }
-    // const headers = {
-    //     Authorization: "Bearer " + token,
     // }
 
     const { data, isLoading, error } = useUser()
@@ -44,8 +40,6 @@ function Appp() {
     useEffect(() => {
         localStorage.setItem("sidebarShow", sidebarShow)
     }, [sidebarShow])
-
-    // document.body.style.overflow = activeModal > 0 ? "hidden" : null
 
     // if (isLoading) {
     //     return (
@@ -255,7 +249,7 @@ function Appp() {
                             <>
                                 <div className="mt-4">
                                     <p className="text-2xl">
-                                        {error.response.data.message || "Something went wrong"}
+                                        {"Something went wrong. Please make sure you're logged in"}
                                     </p>
                                 </div>
                             </>

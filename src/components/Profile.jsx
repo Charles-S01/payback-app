@@ -17,8 +17,6 @@ export default function Profile() {
         queryFn: () => getDebts({ userId: data.user.id, isPaid: true }),
     })
 
-    // console.log("Resolved debts " + JSON.stringify(resolvedDebts, null, 2))
-
     const { mutateAsync: deleteDebtMutation } = useMutation({
         mutationFn: () => deleteDebts({ isPaid: true }),
         onSuccess: () => {

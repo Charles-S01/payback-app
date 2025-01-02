@@ -1,8 +1,8 @@
 import { useContext } from "react"
-import { ActiveModalContext } from "../App"
+// import { ActiveModalContext } from "../App"
 
 export default function Modal({ children }) {
-    const { handleCloseModal } = useContext(ActiveModalContext)
+    // const { handleCloseModal } = useContext(ActiveModalContext)
     return (
         <>
             <div
@@ -22,7 +22,11 @@ export default function Modal({ children }) {
                             stroke="currentColor"
                             className="size-8"
                         >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M6 18 18 6M6 6l12 12"
+                            />
                         </svg>
                     </button>
                     {children}

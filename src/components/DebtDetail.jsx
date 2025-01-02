@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { BackButton, Loading, Modal } from "../components"
-import { ActiveModalContext } from "../App"
+// import { ActiveModalContext } from "../App"
 import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
 import { QueryClient, useMutation, useQuery } from "react-query"
@@ -24,8 +24,6 @@ export default function DebtDetail() {
     const isEditMode = debtId ? true : false
 
     const isOweToUser = isEditMode ? debtData?.debt.isOwedToUser : isOwedToUser === "true"
-
-    // const { activeModal, handleCloseModal, isOweToUserModal, debtData } = useContext(ActiveModalContext)
 
     const [otherPartyName, setOtherPartyName] = useState("")
     const [oweAmount, setOweAmount] = useState("")

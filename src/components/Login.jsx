@@ -34,11 +34,9 @@ function Loginn() {
     const { mutateAsync: loginUserMutation } = useMutation({
         mutationFn: () => loginUser({ username, password }),
         onError: (error) => {
-            console.log("onError")
             setErrorMessage(error.response.data.message)
         },
         onSuccess: (data) => {
-            console.log("onSuccess")
             localStorage.setItem("token", data.token)
             navigate("/")
         },
