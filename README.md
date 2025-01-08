@@ -7,7 +7,7 @@ A web application where users can keep track of money owed to them and debts the
 * Tailwind CSS
 * HTML
 
-### Back-end (seperate repo):
+### Back-end ([separate repo](https://github.com/Charles-S01/payback-api)):
 * Node.js
 * Express
 * Prisma ORM
